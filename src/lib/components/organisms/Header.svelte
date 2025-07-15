@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { title as siteTitle, navLinks } from '$lib/config';
 
-	export let featuredPost;
+	// export let featuredPost;
 
 	let navOpen = false;
 
@@ -46,14 +46,14 @@
 		</nav>
 	</section>
 
-	{#if featuredPost}
+	<!-- {#if featuredPost}
 		<section class="featured-post">
 			<h2 class="featured-title">
 				<a href={`/issues/${featuredPost.slug}`}>{featuredPost.title}</a>
 			</h2>
 			<p class="featured-summary">{featuredPost.description}</p>
 		</section>
-	{/if}
+	{/if} -->
 </header>
 
 <style>

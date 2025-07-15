@@ -31,7 +31,7 @@
 </script>
 
 <div class="layout">
-	<!-- <Header featuredPost={data.featuredPost} /> -->
+	<Header />
 
 
 	<main>
