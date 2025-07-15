@@ -1,15 +1,24 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import type { Post } from '$lib/types';
 	import { title as siteTitle, navLinks } from '$lib/config';
 
-	// export let featuredPost;
-
 	let navOpen = false;
+	let featured: Post | null = null;
 
 	function navigateTo(href: string) {
 		navOpen = false;
 		goto(href);
 	}
+
+	onMount(async () => {
+		const res = await fetch('/api/posts');
+		const posts: Post[] = await res.json();
+		if (posts.length > 0) {
+			featured = posts[0];
+		}
+	});
 </script>
 
 <header class="neon-header">
@@ -46,14 +55,17 @@
 		</nav>
 	</section>
 
-	<!-- {#if featuredPost}
-		<section class="featured-post">
-			<h2 class="featured-title">
-				<a href={`/issues/${featuredPost.slug}`}>{featuredPost.title}</a>
-			</h2>
-			<p class="featured-summary">{featuredPost.description}</p>
-		</section>
-	{/if} -->
+{#if featured}
+<section class="featured-post">
+	<a href={`/issues/${featured.slug}`}>
+		{#if featured.image}
+			<img src={`/images/${featured.image}`} alt={featured.title} />
+		{/if}
+		<h2>{featured.title}</h2>
+		<p>{featured.description}</p>
+	</a>
+</section>
+{/if}
 </header>
 
 <style>
