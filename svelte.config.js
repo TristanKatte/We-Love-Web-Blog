@@ -5,12 +5,16 @@ import { mdsvex, escapeSvelte } from 'mdsvex'
 import { createHighlighter } from 'shiki'
 import remarkToc from 'remark-toc'
 import rehypeSlug from 'rehype-slug'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: ['.md'],
 		layout: {
-		_: './src/mdsvex.svelte'
+		_: path.resolve(__dirname, 'src', 'mdsvex.svelte')
 	},
 	highlight: {
 		highlighter: async (code, lang = 'text') => {
@@ -32,8 +36,13 @@ const config = {
 	extensions: ['.svelte', '.md'],
 	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		alias: {
+			$components: path.resolve('./src/components'),
+			$content: path.resolve('./src/lib/content')
+		}
 	}
-}
+};
+
 
 export default config

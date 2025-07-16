@@ -1,5 +1,6 @@
-/* @import '@fontsource/atkinson-hyperlegible';
-@import '@fontsource/jetbrains-mono'; */
+@import '@fontsource/numans';
+@import '@fontsource/ruluko';
+@import '@fontsource/cantarell/700.css';
 
 html {
 	/* font */

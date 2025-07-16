@@ -6,7 +6,7 @@
 	import type { Post } from '$lib/types';
 
 	let navOpen = false;
-	let featured: Post | null = null;
+	export let featured;
 
 	onMount(async () => {
 		featured = await getLatestPost();
@@ -56,10 +56,7 @@
 
 	{#if featured}
 		<section class="featured-post">
-			<a href={`/blog/${featured.slug}`}>
-				{#if featured.image}
-					<img src={`/images/${featured.image}`} alt={featured.title} />
-				{/if}
+			<a href={`/issues/${featured.slug}`}>
 				<h2>{featured.title}</h2>
 				<p>{featured.description}</p>
 			</a>
@@ -185,14 +182,6 @@
 	.featured-post p {
 		font-style: italic;
 		color: var(--txt-color);
-	}
-
-	.featured-post img {
-		width: 100%;
-		max-height: 300px;
-		object-fit: cover;
-		border-radius: var(--radius-2);
-		margin-bottom: 1rem;
 	}
 
 	@keyframes shrink {
