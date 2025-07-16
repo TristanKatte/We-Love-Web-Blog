@@ -16,7 +16,7 @@ export function formatDate(date: string, dateStyle: DateStyle = 'medium', locale
  * Haalt de meest recente gepubliceerde blogpost op uit src/posts.
  */
 export async function getLatestPost(): Promise<Post | null> {
-	const modules = import.meta.glob('/src/posts/*.md', { eager: true });
+	const modules = import.meta.glob('/src/lib/content/issues/*.md', { eager: true });
 
 	let posts: Post[] = [];
 
