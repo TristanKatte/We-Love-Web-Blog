@@ -2,18 +2,15 @@ import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import type { Post } from '$lib/types';
 
-export const load: PageLoad = async ({ params }) => {
-	try {
-		const post = await import(`$lib/content/issues/${params.slug}.md`) as unknown as {
-			default: ConstructorOfATypedSvelteComponent;
-			metadata: Post;
-		};
+export async function load({ params }) {
+  try {
+    const post = await import(`../../../lib/content/issues/${params.slug}.md`);
 
-		return {
-			content: post.default,
-			meta: post.metadata
-		};
-	} catch (e) {
-		throw error(404, `Could not find ${params.slug}`);
-	}
-};
+    return {
+      content: post.default,
+      meta: post.metadata
+    };
+  } catch {
+    throw error(404, `Could not find post: ${params.slug}`);
+  }
+}
