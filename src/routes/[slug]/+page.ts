@@ -4,7 +4,7 @@ import type { Post } from '$lib/types';
 
 export const load: PageLoad = async ({ params }) => {
 	try {
-		const post = await import(`$lib/content/issues/${params.slug}.md`) as unknown as {
+		const post = await import(`../../../posts/${params.slug}.md`) as unknown as {
 			default: ConstructorOfATypedSvelteComponent;
 			metadata: Post;
 		};
