@@ -9,7 +9,7 @@ async function getPosts(): Promise<Post[]> {
 	let posts: Post[] = [];
 
 	// ↘︎ pad aanpassen aan jouw map
-	const modules = import.meta.glob('/src/lib/content/issues/*.md', { eager: true });
+	const modules = import.meta.glob('/src/posts/*.md', { eager: true });
 
 	for (const path in modules) {
 		const mod = modules[path] as { metadata: Omit<Post, 'slug'> };
