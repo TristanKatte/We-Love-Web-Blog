@@ -1,24 +1,21 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import type { Post } from '$lib/types';
+	import { goto } from '$app/navigation';
 	import { title as siteTitle, navLinks } from '$lib/config';
+	import { getLatestPost } from '$lib/utils';
+	import type { Post } from '$lib/types';
 
 	let navOpen = false;
 	let featured: Post | null = null;
+
+	onMount(async () => {
+		featured = await getLatestPost();
+	});
 
 	function navigateTo(href: string) {
 		navOpen = false;
 		goto(href);
 	}
-
-	onMount(async () => {
-		const res = await fetch('/api/posts');
-		const posts: Post[] = await res.json();
-		if (posts.length > 0) {
-			featured = posts[0];
-		}
-	});
 </script>
 
 <header class="neon-header">
@@ -49,23 +46,25 @@
 						} else {
 							navOpen = false;
 						}
-					}}>{link.label}</a
+					}}
 				>
+					{link.label}
+				</a>
 			{/each}
 		</nav>
 	</section>
 
-{#if featured}
-<section class="featured-post">
-	<a href={`/issues/${featured.slug}`}>
-		{#if featured.image}
-			<img src={`/images/${featured.image}`} alt={featured.title} />
-		{/if}
-		<h2>{featured.title}</h2>
-		<p>{featured.description}</p>
-	</a>
-</section>
-{/if}
+	{#if featured}
+		<section class="featured-post">
+			<a href={`/blog/${featured.slug}`}>
+				{#if featured.image}
+					<img src={`/images/${featured.image}`} alt={featured.title} />
+				{/if}
+				<h2>{featured.title}</h2>
+				<p>{featured.description}</p>
+			</a>
+		</section>
+	{/if}
 </header>
 
 <style>
@@ -175,28 +174,25 @@
 		animation-range: 0px 500px;
 	}
 
-	.featured-title {
+	.featured-post h2 {
 		color: var(--strong-color);
 		font-size: 1.5rem;
 		font-weight: bold;
 		margin-bottom: 0.5rem;
+		text-shadow: 0 0 6px var(--btn-color);
 	}
 
-	.featured-title a {
-		text-decoration: none;
-		color: var(--heading-color);
-		text-shadow: 0 0 8px var(--btn-color);
-	}
-
-	.featured-title a:focus-visible {
-		outline: 2px solid var(--btn-color);
-		outline-offset: 8px;
-		border-radius: 4px;
-	}
-
-	.featured-summary {
+	.featured-post p {
 		font-style: italic;
 		color: var(--txt-color);
+	}
+
+	.featured-post img {
+		width: 100%;
+		max-height: 300px;
+		object-fit: cover;
+		border-radius: var(--radius-2);
+		margin-bottom: 1rem;
 	}
 
 	@keyframes shrink {
