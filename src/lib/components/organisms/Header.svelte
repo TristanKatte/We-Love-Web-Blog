@@ -3,13 +3,12 @@
 	import { goto } from '$app/navigation';
 	import { title as siteTitle, navLinks } from '$lib/config';
 	import { getLatestPost } from '$lib/utils';
-	import type { Post } from '$lib/types';
-
+	
 	let navOpen = false;
-	export let featured;
+	export let featuredPost;
 
 	onMount(async () => {
-		featured = await getLatestPost();
+		featuredPost = await getLatestPost();
 	});
 
 	function navigateTo(href: string) {
@@ -53,15 +52,22 @@
 			{/each}
 		</nav>
 	</section>
-
-	{#if featured}
+	{#if featuredPost}
+		<section class="featured-post">
+			<h2 class="featured-title">
+				<a href={`/issues/${featuredPost.slug}`}>{featuredPost.title}</a>
+			</h2>
+			<p class="featured-summary">{featuredPost.description}</p>
+		</section>
+	{/if}
+	<!-- {#if featured}
 		<section class="featured-post">
 			<a href={`/issues/${featured.slug}`}>
 				<h2>{featured.title}</h2>
 				<p>{featured.description}</p>
 			</a>
 		</section>
-	{/if}
+	{/if} -->
 </header>
 
 <style>
