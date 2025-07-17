@@ -6,7 +6,7 @@ categories:
   - we love web
   - accessibility
 published: true
-image: "/accessibility-1.webp"
+image: "accessibility-1.webp"
 ---
 
 
