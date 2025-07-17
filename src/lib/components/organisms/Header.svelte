@@ -222,7 +222,7 @@
 			left: 0;
 			right: 0;
 			width: 100vw;
-			height: 38vh;
+			height: 45vh;
 			background: var(--main-bg-color);
 			flex-direction: column;
 			display: none;
