@@ -148,24 +148,46 @@
 </section>
 
 <style>
-	/* Filter styling (optioneel behouden) */
+	/* === Filters === */
 	.filters-section {
 		padding: var(--size-5);
 	}
 
 	.filters {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		gap: 1rem;
+	}
+
+	@media (min-width: 640px) {
+		.filters {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
 	}
 
 	fieldset {
 		border: 2px dashed var(--btn-color);
 		padding: 0.75rem;
 		border-radius: 6px;
+		flex: 1;
+		min-width: 100%;
+	}
+
+	@media (min-width: 640px) {
+		fieldset {
+			min-width: auto;
+		}
+	}
+
+	legend {
+		font-weight: bold;
+		margin-bottom: 0.5rem;
+		display: block;
 	}
 
 	select {
+		width: 100%;
 		padding: 0.5rem;
 		border: 1px solid var(--btn-color);
 		border-radius: 4px;
@@ -173,11 +195,17 @@
 		color: var(--text-1);
 	}
 
-    h2 {
-        margin-left: var(--size-5);
-    }
+	/* === Sections === */
+	section {
+		padding: var(--size-3);
+	}
 
-	/* Posts grid */
+	h2 {
+		color: var(--heading-color);
+		margin-left: var(--size-5);
+	}
+
+	/* === Cards grid === */
 	.cards {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -190,6 +218,7 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
+
 	@media (min-width: 1024px) {
 		.cards {
 			grid-template-columns: repeat(4, 1fr);
@@ -199,7 +228,7 @@
 	.post {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between; /* standaard */
+		justify-content: space-between;
 		background: var(--project-card-color);
 		border: 6px solid var(--btn-color);
 		border-radius: 8px;
@@ -208,14 +237,6 @@
 		transition:
 			transform 0.2s ease,
 			box-shadow 0.2s ease;
-	}
-
-	section {
-		padding: var(--size-3);
-	}
-
-	h2 {
-		color: var(--heading-color);
 	}
 
 	.post:hover {

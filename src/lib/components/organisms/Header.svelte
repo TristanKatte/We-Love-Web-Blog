@@ -4,7 +4,7 @@
 	import { title as siteTitle, navLinks } from '$lib/config';
 	import { getLatestPost } from '$lib/utils';
 	import type { Post } from '$lib/types';
-	
+
 	let navOpen = false;
 	export let featuredPost: Post | null;
 
@@ -70,6 +70,7 @@
 
 	.neon-header {
 		z-index: 9999;
+		position: relative;
 		background: transparent;
 		color: var(--txt-color);
 		font-family: 'Orbitron', 'Segoe UI', sans-serif;
@@ -109,9 +110,10 @@
 		display: none;
 		font-size: 2rem;
 		color: var(--btn-color);
-		background: none;
+		background-color: #828282;
 		border: none;
 		cursor: pointer;
+		z-index: 10000;
 	}
 
 	.main-nav {
@@ -215,22 +217,24 @@
 		}
 
 		.main-nav {
-			position: static;
-			top: 100%;
+			position: fixed;
+			top: 0;
 			left: 0;
 			right: 0;
-
+			width: 100vw;
+			height: 38vh;
 			background: var(--main-bg-color);
 			flex-direction: column;
 			display: none;
-			padding: 1rem;
+			padding: 4rem 1rem 2rem;
 			border-top: 2px solid var(--btn-color);
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			z-index: 9998; /* lager dan header zelf */
 		}
 
-		.main-nav.open {
-			display: flex;
-		}
+	.main-nav.open {
+	display: flex;
+}
 
 		.nav-link {
 			font-size: 1.2rem;
