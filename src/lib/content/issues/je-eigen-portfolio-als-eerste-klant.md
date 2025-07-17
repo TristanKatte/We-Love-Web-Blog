@@ -6,6 +6,7 @@ categories:
   - we love web
   - portfolio
 published: true
+image: "portfolio.jpg"
 ---
 
 # Je Eigen Portfolio als Eerste Klant  

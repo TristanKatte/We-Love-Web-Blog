@@ -5,6 +5,7 @@ date: '2024-03-15'
 categories:
   - we love web
 published: true
+image: "digital-garden.webp"
 ---
 
 

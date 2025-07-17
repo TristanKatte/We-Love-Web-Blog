@@ -5,6 +5,7 @@ date: '2024-04-26'
 categories:
   - we love web
 published: true
+image: "programming.jpg"
 ---
 
 # Is it a bug or a feature?  

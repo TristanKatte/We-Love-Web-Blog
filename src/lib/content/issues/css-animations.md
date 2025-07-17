@@ -5,6 +5,7 @@ date: '2023-12-15'
 categories:
   - we love web
 published: true
+image: "css-animation.gif"
 ---
 
 # CSS Animations: Creativiteit in Beweging  

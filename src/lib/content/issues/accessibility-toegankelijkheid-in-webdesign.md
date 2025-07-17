@@ -5,6 +5,7 @@ date: '2024-01-19'
 categories:
   - we love web
 published: true
+image: "digital-accessibility-2.jpg"
 ---
 
 Op **19 januari 2024** woonde ik een **We Love Web**-lezing bij van **Fenna de Wilde**. Ze is oud-student van FDND en werkt als **Creative Frontend Developer bij Bakken & Baeck**. In haar lezing ging ze in op het belang van digitale toegankelijkheid en hoe je dit als developer kunt toepassen.

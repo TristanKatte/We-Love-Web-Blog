@@ -6,6 +6,7 @@ categories:
   - we love web
   - development process
 published: true
+image: "pitch.jpg"
 ---
 
 # From Pitch to Production  

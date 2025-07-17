@@ -5,6 +5,7 @@ date: '2024-06-14'
 categories:
   - we love web
 published: true
+image: "business.jpg"
 ---
 
  

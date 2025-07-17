@@ -7,6 +7,7 @@ categories:
   - loopbaan
   - portfolio
 published: true
+image: "strong-portfolio.jpeg"
 ---
 
 # Een Sterk Portfolio Bouwen  

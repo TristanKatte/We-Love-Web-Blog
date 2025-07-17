@@ -5,6 +5,7 @@ date: '2024-05-24'
 categories:
   - we love web
 published: true
+image: "studying.jpg"
 ---
 
 # Van studeren naar een product  

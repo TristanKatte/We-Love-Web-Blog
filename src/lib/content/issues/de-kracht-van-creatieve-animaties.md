@@ -6,6 +6,7 @@ categories:
   - we love web
   - creative development
 published: true
+image: "powerful-animation.gif"
 ---
 
  

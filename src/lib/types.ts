@@ -2,10 +2,10 @@ export type Categories = 'sveltekit' | 'svelte'
 
 export type Post = {
 	title: string;
-	description: string;
 	date: string;
+	description: string;
 	image?: string;
-	categories?: string[];
+	tags?: string[];
+	slug: string;
 	published: boolean;
-	slug?: string;
 };

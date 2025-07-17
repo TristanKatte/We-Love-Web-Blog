@@ -5,6 +5,7 @@ date: '2023-11-24'
 categories:
   - we love web
 published: true
+image: "design-system.webp"
 ---
 
 Op 24 november 2023 woonde ik een **We Love Web**-lezing bij waarin **Yolijn van der Kolk** een inspirerende presentatie gaf over het **NL Design System**. In dit artikel lees je wat een design system is, hoe het NL Design System werkt en hoe het in de praktijk wordt toegepast binnen de overheid.

@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	
 
   export let footerTitle = 'We Love Web';
@@ -19,13 +21,13 @@
       <ul>
         {#each footerLinks as link}
           <li>
-            <!-- <a 
+            <a 
               href={link.href}
               target={link.external ? "_blank" : null}
               rel={link.external ? "noopener noreferrer" : null}
             >
               {link.label}
-            </a> -->
+            </a>
           </li>
         {/each}
       </ul>
@@ -63,7 +65,7 @@
   gap: 1.5rem;
 }
 
-/* .footer-nav a {
+.footer-nav a {
   color: var(--txt-color);
   text-decoration: none;
   font-weight: 500;
@@ -74,7 +76,7 @@
 .footer-nav a:focus {
   color: var(--btn-color);
   text-decoration: underline;
-} */
+}
 
 .footer-copy {
   font-style: normal;

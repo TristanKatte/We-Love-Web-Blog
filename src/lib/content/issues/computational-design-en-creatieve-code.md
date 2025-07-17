@@ -5,6 +5,7 @@ date: '2024-02-16'
 categories:
   - we love web
 published: true
+image: computational-design.jpg
 ---
 
 Op We Love Web gaf **Simon Riisnæs Dagfinrud**, designer-developer bij **NOKO**, een fascinerende lezing over zijn werk, zijn visie op computational design, en het spanningsveld tussen creativiteit en techniek. Simon werkte eerder aan projecten bij onder andere **WeTransfer**, en staat bekend om zijn experimentele en visueel krachtige benadering van webdesign.
