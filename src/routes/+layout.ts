@@ -1,7 +1,11 @@
 import type { LayoutLoad } from './$types';
-import { getLatestPost } from '$lib/utils';
+import type { Post } from '$lib/types';
 
-export const load: LayoutLoad = async () => {
-	const featured = await getLatestPost();
-	return { featured };
+export const load: LayoutLoad = async ({ fetch }) => {
+	const res = await fetch('/api/posts');
+	const posts: Post[] = await res.json();
+
+	return {
+		featuredPost: posts[0] // Meest recente post
+	};
 };

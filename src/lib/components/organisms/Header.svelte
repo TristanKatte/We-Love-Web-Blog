@@ -3,9 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { title as siteTitle, navLinks } from '$lib/config';
 	import { getLatestPost } from '$lib/utils';
+	import type { Post } from '$lib/types';
 	
 	let navOpen = false;
-	export let featuredPost;
+	export let featuredPost: Post | null;
 
 	onMount(async () => {
 		featuredPost = await getLatestPost();
@@ -60,14 +61,6 @@
 			<p class="featured-summary">{featuredPost.description}</p>
 		</section>
 	{/if}
-	<!-- {#if featured}
-		<section class="featured-post">
-			<a href={`/issues/${featured.slug}`}>
-				<h2>{featured.title}</h2>
-				<p>{featured.description}</p>
-			</a>
-		</section>
-	{/if} -->
 </header>
 
 <style>

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Header from '$lib/components/organisms/Header.svelte';
 	import Footer from '$lib/components/organisms/Footer.svelte';
+	import type { Post } from '$lib/types';
+	
 	
 	import { onNavigate } from '$app/navigation';
 	import { afterNavigate } from '$app/navigation';
@@ -10,7 +12,7 @@
 	import 'open-props/buttons';
 	import '../app.css';
 
-	export let data;
+	export let data: { featuredPost: Post };
 
 		onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -31,7 +33,7 @@
 </script>
 
 <div class="layout">
-	<Header featuredPost={data.featured} />
+	<Header featuredPost={data.featuredPost} />
 
 
 	<main>

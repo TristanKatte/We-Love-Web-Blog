@@ -57,17 +57,18 @@
 		text-transform: capitalize;
 		color: var(--heading-color);
 		font-family: 'Cantarell', sans-serif;
-		font-weight: 400;
+		font-weight: 700;
 		padding: var(--size-3);
 	}
 
 	h1 + p {
 		margin-top: var(--size-2);
 		color: var(--text-2);
+		font-family: Ruluko, sans-serif;
 	}
 
 	p {
-		font-family: 'Ruluko', sans-serif;
+		font-family: 'Numans', sans-serif;
 		font-weight: 400;
 	}
 

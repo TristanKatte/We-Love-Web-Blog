@@ -144,16 +144,21 @@ li {
 		&:has(img) {
 			display: contents;
 		}
+		color: var(--txt-color);
+		font-family: "Numans", sans-serif;
 	}
 
-	:is(h2, h3, h4, h5, h6) {
+	:is(h1, h2, h3, h4, h5, h6) {
 		margin-top: var(--size-8);
 		margin-bottom: var(--size-3);
+		color: var(--heading-color);
+		font-family: 'Cantarell', sans-serif;
 	}
 
 	:is(ul, ol) {
 		list-style-type: '🔥';
 		padding-left: var(--size-5);
+		font-family: "Numans", sans-serif;
 	}
 
 	:is(ul, ol) li {
@@ -164,6 +169,7 @@ li {
 	pre {
 		max-inline-size: 100%;
 		padding: var(--size-3);
+		margin: 2rem 0 2rem 0;
 		border-radius: 8px;
 		tab-size: 2;
 	}
