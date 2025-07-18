@@ -113,6 +113,7 @@
 		width: 100%;
 		max-width: 100%;
 		text-align: center;
+		margin: 10rem;
 	}
 
 	.hero-right {

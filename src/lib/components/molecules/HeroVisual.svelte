@@ -2,16 +2,12 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 
-	let show = true;
-
 	onMount(() => {
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-		if (prefersReducedMotion || isMobile) {
-			show = false;
-			return;
-		}
+		// Skip animation if reduced motion or mobile
+		if (prefersReducedMotion || isMobile) return;
 
 		gsap.from('.hero-right', {
 			x: 100,
@@ -23,30 +19,28 @@
 	});
 </script>
 
-{#if show}
-	<div class="container-wrapper">
-		<div class="mix-blend-mode"></div>
-		<div
-			class="container"
-			role="img"
-			aria-label="Draaiende geometrische 3D-vormen die een visueel element voorstellen."
-		>
-			{#each { length: 6 }, i}
-				{@const index = i + 1}
-				<div class="item" style:--i={i}>
-					<div class="surface" style:--i={index + i}></div>
-					<div class="surface" style:--i={index * 2}></div>
-					<div class="top" style:--i={index * 2 - 1}></div>
-					<div class="left"></div>
-				</div>
-			{/each}
-
-			<div class="ball-container" aria-hidden="true">
-				<div class="ball"></div>
+<div class="container-wrapper hero-right">
+	<div class="mix-blend-mode"></div>
+	<div
+		class="container"
+		role="img"
+		aria-label="Draaiende geometrische 3D-vormen die een visueel element voorstellen."
+	>
+		{#each { length: 6 } as _, i}
+			{@const index = i + 1}
+			<div class="item" style:--i={i}>
+				<div class="surface" style:--i={index + i}></div>
+				<div class="surface" style:--i={index * 2}></div>
+				<div class="top" style:--i={index * 2 - 1}></div>
+				<div class="left"></div>
 			</div>
+		{/each}
+
+		<div class="ball-container" aria-hidden="true">
+			<div class="ball"></div>
 		</div>
 	</div>
-{/if}
+</div>
 
 <style>
 	:root {
@@ -137,10 +131,10 @@
 		background-position: 50% 20%, var(--border) var(--border), 0 0;
 
 		mask: radial-gradient(circle at 50% var(--circle-y), transparent var(--diameter), black var(--diameter));
+	}
 
-		&:nth-child(2) {
-			translate: 4vmin 5.7vmin;
-		}
+	.surface:nth-child(2) {
+		translate: 4vmin 5.7vmin;
 	}
 
 	.top {
@@ -199,12 +193,12 @@
 			radial-gradient(var(--radius) var(--radius) at center, black calc(var(--radius) - var(--border)), transparent calc(var(--radius) - var(--border))),
 			conic-gradient(var(--c1), var(--c3), var(--c2), var(--c4), var(--c3), var(--c1), var(--c2), var(--c1));
 		background-repeat: no-repeat;
-		background-size: var(--bg-2), var(--bg-1);
 		background-position: 50%;
 
 		transform: rotateX(45deg) rotateY(45deg) translateY(-20vmin);
 	}
 
+	/* Responsive adjustments */
 	@media (min-width: 768px) {
 		.container {
 			width: 45vmin;
@@ -245,21 +239,24 @@
 		}
 	}
 
-	@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-	.container {
-		width: 50vmin;
-		margin-top: 4rem;
-		margin-bottom: 4rem;
-		transform: rotateX(-35deg) rotateY(35deg);
-	}
+	/* Accessibility: reduce motion */
+	@media (prefers-reduced-motion: reduce) {
+		.container {
+			animation: none !important;
+			transform: none !important;
+		}
 
-	.ball {
-		--diameter: 20vmin;
-		transform: rotateX(45deg) rotateY(45deg) translateY(-10vmin);
-	}
+		.ball-container {
+			animation: none !important;
+		}
 
-	.item {
-		--gap: 8vmin;
+		.item,
+		.surface,
+		.top,
+		.left,
+		.ball {
+			animation: none !important;
+			transition: none !important;
+		}
 	}
-}
 </style>
