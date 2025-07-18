@@ -2,6 +2,11 @@
   // data of logic kan hier als nodig
 </script>
 
+<svelte:head>
+	<title>Over</title>
+	<meta name="description" content="About" />
+</svelte:head>
+
 
   <article class="about-me">
     <header>

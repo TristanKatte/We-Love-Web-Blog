@@ -53,7 +53,7 @@
 </script>
 
 <svelte:head>
-	<title>Issues</title>
+	<title>Lezingen</title>
 	<meta name="description" content="Issues" />
 </svelte:head>
 
