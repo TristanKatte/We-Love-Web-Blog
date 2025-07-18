@@ -207,7 +207,9 @@
 
 	@media (min-width: 768px) {
 		.container {
-			width: 60vmin;
+			width: 45vmin;
+			margin-top: 15rem;
+			margin-bottom: 10rem;
 		}
 
 		.ball {
