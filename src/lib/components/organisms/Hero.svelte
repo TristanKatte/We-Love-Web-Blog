@@ -99,4 +99,24 @@
 			display: none;
 		}
 	}
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+	.hero {
+		flex-direction: column;
+		justify-content: center;
+		padding: 3rem 2rem;
+		gap: 2rem;
+	}
+
+	.hero-left,
+	.hero-right {
+		width: 100%;
+		max-width: 100%;
+		text-align: center;
+	}
+
+	.hero-right {
+		margin-top: 2rem;
+	}
+}
 </style>

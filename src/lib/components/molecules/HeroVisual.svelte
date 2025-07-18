@@ -244,4 +244,22 @@
 			--gap: 9vmin;
 		}
 	}
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+	.container {
+		width: 50vmin;
+		margin-top: 4rem;
+		margin-bottom: 4rem;
+		transform: rotateX(-35deg) rotateY(35deg);
+	}
+
+	.ball {
+		--diameter: 20vmin;
+		transform: rotateX(45deg) rotateY(45deg) translateY(-10vmin);
+	}
+
+	.item {
+		--gap: 8vmin;
+	}
+}
 </style>
