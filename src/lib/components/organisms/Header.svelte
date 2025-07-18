@@ -110,7 +110,7 @@
 		display: none;
 		font-size: 2rem;
 		color: var(--btn-color);
-		background-color: #828282;
+		background-color: var(--cyan-12);
 		border: none;
 		cursor: pointer;
 		z-index: 10000;
@@ -223,7 +223,7 @@
 			right: 0;
 			width: 100vw;
 			height: 45vh;
-			background: var(--main-bg-color);
+			background: var(--gray-12);
 			flex-direction: column;
 			display: none;
 			padding: 4rem 1rem 2rem;
