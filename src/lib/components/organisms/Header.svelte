@@ -187,7 +187,7 @@
 
 	@keyframes shrink {
 		from {
-			height: 250px;
+			height: 450px;
 		}
 		to {
 			height: 60px;
