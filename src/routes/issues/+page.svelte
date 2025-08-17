@@ -2,28 +2,33 @@
   import { goto } from '$app/navigation';
   import Button from '$lib/components/atoms/Button.svelte';
   import { ArrowRight } from 'lucide-svelte';
-  import { onMount } from 'svelte';
-  import { page } from '$app/stores';
-  import { derived } from 'svelte/store';
+  import { formatDate } from '$lib/utils';
   import type { Post } from '$lib/types';
 
   export let data: {
-    posts: Post[],
-    selectedCategories: string[]
+    posts: Post[]
   };
 
-  let { posts, selectedCategories } = data;
+  let { posts } = data;
 
-  // Collect all categories from posts to show filter buttons
+  // All categories collected from all posts
   let allCategories = new Set<string>();
   posts.forEach(post => {
     post.categories?.forEach(cat => allCategories.add(cat));
   });
   allCategories = new Set(Array.from(allCategories).sort());
 
-  // Local reactive store for selected categories
-  // We need to maintain local state to update UI immediately on button click
-  let selected = new Set(selectedCategories);
+  // Selected categories, init empty = show all
+  let selected = new Set<string>();
+
+  // On page load, read URL query params for categories to pre-select them
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const catParam = params.get('categories');
+    if (catParam) {
+      selected = new Set(catParam.split(',').map(c => c.trim()));
+    }
+  }
 
   function toggleCategory(category: string) {
     if (selected.has(category)) {
@@ -53,18 +58,19 @@
     });
   }
 
-  // Filter posts based on selected categories
+  // Filter posts on client based on selected categories
   $: filteredPosts = selected.size
     ? posts.filter(post => post.categories?.some(cat => selected.has(cat)))
     : posts;
 </script>
+
 
 <svelte:head>
   <title>Lezingen</title>
   <meta name="description" content="Issues" />
 </svelte:head>
 
-<!-- === Category Filters === -->
+<!-- Category Filters -->
 <section class="category-filters" aria-label="Filter posts by category">
   <div class="filter-scroll">
     <button
@@ -89,9 +95,10 @@
   </div>
 </section>
 
-<!-- === Posts Grid === -->
+<!-- Posts Grid -->
 <section class="container" aria-labelledby="posts-heading">
   <h2 id="posts-heading">Alle lezingen</h2>
+
   {#if filteredPosts.length === 0}
     <p>Geen resultaten gevonden voor de geselecteerde categorieën.</p>
   {:else}
@@ -120,7 +127,7 @@
             >
               {post.title}
             </h3>
-            <time class="date" datetime={post.date}>{post.date}</time>
+            <time class="date" datetime={post.date}>{formatDate(post.date, 'long', 'nl-NL')}</time>
           </header>
 
           <p class="description">{post.description}</p>
@@ -149,7 +156,7 @@
 </section>
 
 <style>
-  /* === Category Filters === */
+  /* Category Filters */
   .category-filters {
     padding: var(--size-5);
     overflow-x: auto;
@@ -186,7 +193,7 @@
     color: white;
   }
 
-  /* === Posts grid === */
+  /* Posts grid */
   .cards {
     display: grid;
     grid-template-columns: 1fr;
@@ -277,5 +284,6 @@
     padding: 0.25rem 0.5rem;
     border-radius: 10px;
     white-space: nowrap;
+    border: 1px solid var(--btn-color);
   }
 </style>
