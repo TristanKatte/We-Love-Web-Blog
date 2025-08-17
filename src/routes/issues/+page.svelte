@@ -1,302 +1,281 @@
 <script lang="ts">
-	import { formatDate } from '$lib/utils';
-	import Button from '$lib/components/atoms/Button.svelte';
-	import { ArrowRight } from 'lucide-svelte';
-	export let data;
-	const { posts } = data;
+  import { goto } from '$app/navigation';
+  import Button from '$lib/components/atoms/Button.svelte';
+  import { ArrowRight } from 'lucide-svelte';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+  import { derived } from 'svelte/store';
+  import type { Post } from '$lib/types';
 
-	let filters = { year: '', month: '', day: '' };
+  export let data: {
+    posts: Post[],
+    selectedCategories: string[]
+  };
 
-	let years = new Set<string>();
-	let months = new Set<string>();
-	let days = new Set<string>();
+  let { posts, selectedCategories } = data;
 
-	const monthMap = [
-		{ name: 'Januari', value: '01' },
-		{ name: 'Februari', value: '02' },
-		{ name: 'Maart', value: '03' },
-		{ name: 'April', value: '04' },
-		{ name: 'Mei', value: '05' },
-		{ name: 'Juni', value: '06' },
-		{ name: 'Juli', value: '07' },
-		{ name: 'Augustus', value: '08' },
-		{ name: 'September', value: '09' },
-		{ name: 'Oktober', value: '10' },
-		{ name: 'November', value: '11' },
-		{ name: 'December', value: '12' }
-	];
+  // Collect all categories from posts to show filter buttons
+  let allCategories = new Set<string>();
+  posts.forEach(post => {
+    post.categories?.forEach(cat => allCategories.add(cat));
+  });
+  allCategories = new Set(Array.from(allCategories).sort());
 
-	function parseDateParts(dateStr: string) {
-		const d = new Date(dateStr);
-		return {
-			year: d.getFullYear().toString(),
-			month: (d.getMonth() + 1).toString().padStart(2, '0'),
-			day: d.getDate().toString().padStart(2, '0')
-		};
-	}
+  // Local reactive store for selected categories
+  // We need to maintain local state to update UI immediately on button click
+  let selected = new Set(selectedCategories);
 
-	for (const post of posts) {
-		const d = parseDateParts(post.date);
-		years.add(d.year);
-		months.add(d.month);
-		days.add(d.day);
-	}
+  function toggleCategory(category: string) {
+    if (selected.has(category)) {
+      selected.delete(category);
+    } else {
+      selected.add(category);
+    }
+    updateURL();
+  }
 
-	$: filteredPosts = posts.filter((post) => {
-		const d = parseDateParts(post.date);
-		return (
-			(!filters.year || d.year === filters.year) &&
-			(!filters.month || d.month === filters.month) &&
-			(!filters.day || d.day === filters.day)
-		);
-	});
+  function clearCategories() {
+    selected.clear();
+    updateURL();
+  }
+
+  function updateURL() {
+    const params = new URLSearchParams();
+
+    if (selected.size > 0) {
+      params.set('categories', Array.from(selected).join(','));
+    }
+
+    goto(`?${params.toString()}`, {
+      replaceState: true,
+      noScroll: true,
+      keepFocus: true
+    });
+  }
+
+  // Filter posts based on selected categories
+  $: filteredPosts = selected.size
+    ? posts.filter(post => post.categories?.some(cat => selected.has(cat)))
+    : posts;
 </script>
 
 <svelte:head>
-	<title>Lezingen</title>
-	<meta name="description" content="Issues" />
+  <title>Lezingen</title>
+  <meta name="description" content="Issues" />
 </svelte:head>
 
-<section aria-labelledby="filter-heading" class="filters-section">
-	<form class="filters" aria-labelledby="filter-heading" on:submit|preventDefault>
-		<h2 id="filter-heading" class="visually-hidden">Filter posts op datum</h2>
+<!-- === Category Filters === -->
+<section class="category-filters" aria-label="Filter posts by category">
+  <div class="filter-scroll">
+    <button
+      on:click={clearCategories}
+      class:selected={selected.size === 0}
+      type="button"
+      aria-pressed={selected.size === 0}
+    >
+      Alle categorieën
+    </button>
 
-		<fieldset>
-			<legend>Jaar</legend>
-			<select bind:value={filters.year}>
-				<option value="">Alle Jaren</option>
-				{#each Array.from(years).sort() as year}
-					<option value={year}>{year}</option>
-				{/each}
-			</select>
-		</fieldset>
-
-		<fieldset>
-			<legend>Maand</legend>
-			<select bind:value={filters.month}>
-				<option value="">Alle Maanden</option>
-				{#each monthMap as m}
-					<option value={m.value}>{m.name}</option>
-				{/each}
-			</select>
-		</fieldset>
-
-		<fieldset>
-			<legend>Dag</legend>
-			<select bind:value={filters.day}>
-				<option value="">Alle Dagen</option>
-				{#each Array.from(days).sort() as day}
-					<option value={day}>{day}</option>
-				{/each}
-			</select>
-		</fieldset>
-	</form>
+    {#each Array.from(allCategories) as category}
+      <button
+        on:click={() => toggleCategory(category)}
+        class:selected={selected.has(category)}
+        type="button"
+        aria-pressed={selected.has(category)}
+      >
+        {category}
+      </button>
+    {/each}
+  </div>
 </section>
 
-<section class="container" aria-labelledby="blog-heading">
-	<h2 id="blog-heading">Alle lezingen</h2>
-	<section class="cards" aria-label="Blog posts">
-		{#each filteredPosts as issue, i}
-			<article class="post" aria-labelledby={`post-title-${i}`}>
-				{#if issue.image}
-					<img
-						class="thumb"
-						src={`/images/${issue.image}`}
-						alt=""
-						width="400"
-						height="200"
-						loading="lazy"
-						style="view-transition-name: issue-image-{issue.slug}"
-					/>
-				{:else}
-					<div class="thumb fallback" aria-hidden="true"></div>
-				{/if}
+<!-- === Posts Grid === -->
+<section class="container" aria-labelledby="posts-heading">
+  <h2 id="posts-heading">Alle lezingen</h2>
+  {#if filteredPosts.length === 0}
+    <p>Geen resultaten gevonden voor de geselecteerde categorieën.</p>
+  {:else}
+    <section class="cards" aria-label="Posts">
+      {#each filteredPosts as post, i}
+        <article class="post" aria-labelledby={`post-title-${i}`}>
+          {#if post.image}
+            <img
+              class="thumb"
+              src={`/images/${post.image}`}
+              alt=""
+              width="400"
+              height="200"
+              loading="lazy"
+              style="view-transition-name: post-image-{post.slug}"
+            />
+          {:else}
+            <div class="thumb fallback" aria-hidden="true"></div>
+          {/if}
 
-				<header>
-					<h3
-						class="title"
-						id={`post-title-${i}`}
-						style="view-transition-name: issue-title-{issue.slug}"
-					>
-						{issue.title}
-					</h3>
-					<time class="date" datetime={issue.date}>{formatDate(issue.date)}</time>
-				</header>
+          <header>
+            <h3
+              class="title"
+              id={`post-title-${i}`}
+              style="view-transition-name: post-title-{post.slug}"
+            >
+              {post.title}
+            </h3>
+            <time class="date" datetime={post.date}>{post.date}</time>
+          </header>
 
-				<p class="description">{issue.description}</p>
+          <p class="description">{post.description}</p>
 
-				{#if issue.tags?.length}
-					<ul class="card__tags" aria-label="Tags">
-						{#each issue.tags as tag}
-							<li class="card__tag">{tag}</li>
-						{/each}
-					</ul>
-				{/if}
+          {#if post.categories?.length}
+            <ul class="card__tags" aria-label="Categories">
+              {#each post.categories as cat}
+                <li class="card__tag">{cat}</li>
+              {/each}
+            </ul>
+          {/if}
 
-				<Button
-					href={`/issues/${issue.slug}`}
-					data-sveltekit-view-transition
-					size="small"
-					icon={ArrowRight}
-					aria-label={`Bekijk ${issue.title}`}
-				>
-					Lees meer
-				</Button>
-			</article>
-		{/each}
-	</section>
+          <Button
+            href={`/issues/${post.slug}`}
+            data-sveltekit-view-transition
+            size="small"
+            icon={ArrowRight}
+            aria-label={`Bekijk ${post.title}`}
+          >
+            Lees meer
+          </Button>
+        </article>
+      {/each}
+    </section>
+  {/if}
 </section>
 
 <style>
-	/* === Filters === */
-	.filters-section {
-		padding: var(--size-5);
-	}
+  /* === Category Filters === */
+  .category-filters {
+    padding: var(--size-5);
+    overflow-x: auto;
+  }
 
-	.filters {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
+  .filter-scroll {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
 
-	@media (min-width: 640px) {
-		.filters {
-			flex-direction: row;
-			flex-wrap: wrap;
-		}
-	}
+  .filter-scroll button {
+    scroll-snap-align: start;
+    white-space: nowrap;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    background-color: var(--project-card-color);
+    border: 1px solid var(--btn-color);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
 
-	fieldset {
-		border: 2px dashed var(--btn-color);
-		padding: 0.75rem;
-		border-radius: 6px;
-		flex: 1;
-		min-width: 100%;
-	}
+  .filter-scroll button:hover {
+    background-color: var(--btn-color);
+    color: white;
+  }
 
-	@media (min-width: 640px) {
-		fieldset {
-			min-width: auto;
-		}
-	}
+  .filter-scroll button.selected,
+  .filter-scroll button[aria-pressed="true"] {
+    background-color: var(--btn-color);
+    color: white;
+  }
 
-	legend {
-		font-weight: bold;
-		margin-bottom: 0.5rem;
-		display: block;
-	}
+  /* === Posts grid === */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--size-5);
+    padding: var(--size-5);
+  }
 
-	select {
-		width: 100%;
-		padding: 0.5rem;
-		border: 1px solid var(--btn-color);
-		border-radius: 4px;
-		background-color: var(--project-card-color);
-		color: var(--text-1);
-	}
+  @media (min-width: 640px) {
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 
-	/* === Sections === */
-	section {
-		padding: var(--size-3);
-	}
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 
-	h2 {
-		color: var(--heading-color);
-		margin-left: var(--size-5);
-	}
+  .post {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--project-card-color);
+    border: 6px solid var(--btn-color);
+    border-radius: 8px;
+    padding: var(--size-5);
+    min-height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-	/* === Cards grid === */
-	.cards {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--size-5);
-		padding: var(--size-5);
-	}
+  .post:hover {
+    transform: translateY(-5px);
+  }
 
-	@media (min-width: 640px) {
-		.cards {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
+  .thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: var(--size-3);
+  }
 
-	@media (min-width: 1024px) {
-		.cards {
-			grid-template-columns: repeat(4, 1fr);
-		}
-	}
+  .thumb.fallback {
+    display: block;
+    background: radial-gradient(
+      at top left,
+      var(--btn-color),
+      var(--heading-color),
+      var(--project-card-color)
+    );
+    filter: blur(4px);
+  }
 
-	.post {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		background: var(--project-card-color);
-		border: 6px solid var(--btn-color);
-		border-radius: 8px;
-		padding: var(--size-5);
-		min-height: 100%;
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
-	}
+  .title {
+    font-size: var(--font-size-fluid-2);
+    color: var(--heading-color);
+    font-weight: bold;
+    margin: 0;
+  }
 
-	.post:hover {
-		transform: translateY(-5px);
-	}
+  .date {
+    color: var(--strong-color);
+    font-size: 0.9rem;
+    margin-top: var(--size-2);
+    display: block;
+  }
 
-	.thumb {
-		width: 100%;
-		height: 160px;
-		object-fit: cover;
-		border-radius: 6px;
-		margin-bottom: var(--size-3);
-	}
+  .description {
+    margin-top: var(--size-3);
+    color: var(--txt-color);
+    margin-bottom: var(--size-3);
+  }
 
-	.thumb.fallback {
-		display: block;
-		background: radial-gradient(
-			at top left,
-			var(--btn-color),
-			var(--heading-color),
-			var(--project-card-color)
-		);
-		filter: blur(4px);
-	}
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: var(--size-3);
+    list-style: none;
+    padding: 0;
+  }
 
-	.title {
-		font-size: var(--font-size-fluid-2);
-		color: var(--heading-color);
-		font-weight: bold;
-		margin: 0;
-	}
-
-	.date {
-		color: var(--strong-color);
-		font-size: 0.9rem;
-		margin-top: var(--size-2);
-		display: block;
-	}
-
-	.description {
-		margin-top: var(--size-3);
-		color: var(--txt-color);
-		margin-bottom: var(--size-3);
-	}
-
-	.card__tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin-bottom: var(--size-3);
-		list-style: none;
-		padding: 0;
-	}
-
-	.card__tag {
-		font-size: 0.75rem;
-		background: rgba(0, 0, 0, 0.1);
-		color: var(--txt-color);
-		padding: 0.25rem 0.5rem;
-		border-radius: 10px;
-		white-space: nowrap;
-	}
+  .card__tag {
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--txt-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
 </style>
