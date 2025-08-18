@@ -4,6 +4,7 @@ description: Een verslag van de inspirerende We Love Web-lezing van Simon Riisn√
 date: '2024-02-16'
 categories:
   - we love web
+  - Computational design
 published: true
 image: computational-design.jpg
 ---

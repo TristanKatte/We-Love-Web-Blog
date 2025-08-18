@@ -4,7 +4,7 @@ description: Inzichten uit de We Love Web sessie van Vasilis van Gemert over toe
 date: '2024-09-15'
 categories:
   - we love web
-  - Accessibility
+  - accessibility
 published: true
 image: "web-accessibility.webp"
 ---
