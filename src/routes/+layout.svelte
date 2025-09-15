@@ -2,11 +2,9 @@
 	import Header from '$lib/components/organisms/Header.svelte';
 	import Footer from '$lib/components/organisms/Footer.svelte';
 	import type { Post } from '$lib/types';
-	
-	
+
 	import { onNavigate } from '$app/navigation';
-	import { afterNavigate } from '$app/navigation';
-	
+
 	import 'open-props/style';
 	import 'open-props/normalize';
 	import 'open-props/buttons';
@@ -14,7 +12,7 @@
 
 	export let data: { featuredPost: Post };
 
-		onNavigate((navigation) => {
+	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
 
 		return new Promise((resolve) => {
@@ -24,22 +22,13 @@
 			});
 		});
 	});
-
-// afterNavigate(({ to }) => {
-// 	if (to.url.pathname.startsWith('/issues/')) {
-// 		window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-// 	}
-// });
 </script>
 
 <div class="layout">
 	<Header featuredPost={data.featuredPost} />
 
-
 	<main>
-		
 		<slot />
-		
 	</main>
 
 	<Footer />
@@ -49,13 +38,13 @@
 	:global(:root) {
 		--main-bg-color: #393c44;
 		--btn-color: #00adb5;
-		--txt-color: #DEDEDE;
-		--heading-color: #A2F3F3;
+		--txt-color: #dedede;
+		--heading-color: #a2f3f3;
 		--project-card-color: #111827;
 		--strong-color: #f2e9e4;
 	}
 
-		::view-transition-old(root),
+	::view-transition-old(root),
 	::view-transition-new(root) {
 		animation: fade 300ms ease both;
 	}
@@ -70,8 +59,8 @@
 	}
 
 	:global(html) {
-    	scroll-behavior: smooth;
-  	}
+		scroll-behavior: smooth;
+	}
 
 	main {
 		overflow-y: scroll;
@@ -103,36 +92,46 @@
 		overflow-y: auto;
 		scroll-snap-type: y mandatory;
 		min-height: 0;
-}
+	}
 
-::view-transition-old(root),
-::view-transition-new(root) {
-	animation-duration: .3s;
-}
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.3s;
+	}
 
-@keyframes fade-in {
-  from { opacity: 0; }
-}
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+	}
 
-@keyframes fade-out {
-  to { opacity: 0; }
-}
+	@keyframes fade-out {
+		to {
+			opacity: 0;
+		}
+	}
 
-@keyframes slide-from-right {
-  from { transform: translateX(90px); }
-}
+	@keyframes slide-from-right {
+		from {
+			transform: translateX(90px);
+		}
+	}
 
-@keyframes slide-to-left {
-  to { transform: translateX(-90px); }
-}
+	@keyframes slide-to-left {
+		to {
+			transform: translateX(-90px);
+		}
+	}
 
-::view-transition-old(root) {
-  animation: 120ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-    200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-}
+	::view-transition-old(root) {
+		animation:
+			120ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+			200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+	}
 
-::view-transition-new(root) {
-  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 120ms both fade-in,
-    200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-}
+	::view-transition-new(root) {
+		animation:
+			210ms cubic-bezier(0, 0, 0.2, 1) 120ms both fade-in,
+			200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+	}
 </style>

@@ -21,7 +21,7 @@
         Mijn passie ligt bij het bouwen van gebruiksvriendelijke websites die voor iedereen toegankelijk zijn.
       </p>
       <p>
-        Als je meer wilt weten,neem dan een kijkje op mijn portfolio.
+        Als je meer wilt weten,neem dan een kijkje op mijn <a href="https://tristankatte.com/" target="_blank" rel="noopener noreferrer">portfolio</a>.
       </p>
     </section>
   </article>

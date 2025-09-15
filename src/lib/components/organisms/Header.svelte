@@ -165,6 +165,7 @@
 		border-left: 4px solid var(--btn-color);
 		padding: 1rem 1.5rem;
 		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
 		border-radius: 4px;
 		animation-name: shrink-featured;
 		animation-timeline: scroll();
@@ -203,7 +204,6 @@
 		}
 	}
 
-	/* Responsive */
 	@media (max-width: 768px) {
 		.top-bar {
 			flex-direction: row;
@@ -229,7 +229,7 @@
 			padding: 4rem 1rem 2rem;
 			border-top: 2px solid var(--btn-color);
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-			z-index: 9998; /* lager dan header zelf */
+			z-index: 9998; 
 		}
 
 	.main-nav.open {

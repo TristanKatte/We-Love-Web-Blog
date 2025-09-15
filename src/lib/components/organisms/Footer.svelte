@@ -9,8 +9,8 @@
   
   export let footerLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Issues', href: '/issues' },
-    { label: 'About', href: '/about' },
+    { label: 'Lezingen', href: '/issues' },
+    { label: 'Over', href: '/about' },
     { label: 'Contact', href: '/contact' }
   ];
 </script>
