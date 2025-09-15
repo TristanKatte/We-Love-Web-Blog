@@ -19,6 +19,11 @@
 	});
 </script>
 
+<!--
+	3D Sphere Intersection by Konstantin Denerz
+	https://codepen.io/konstantindenerz/pen/xxyZJpO
+-->
+
 <div class="container-wrapper hero-right">
 	<div class="mix-blend-mode"></div>
 	<div
