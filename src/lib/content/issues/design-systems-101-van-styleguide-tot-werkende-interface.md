@@ -1,11 +1,10 @@
 ---
-title: Design Systems 101: Van Styleguide tot Werkende Interface
+title: Design Systems 101 Van Styleguide tot Werkende Interface
 description: Ontdek hoe design systems, styleguides en herbruikbare componenten helpen bij het creëren van consistente, schaalbare en efficiënte digitale producten.
 date: '2025-11-21'
 categories:
   - We love web
   - Styleguides
-  - Components
   - Design System
 published: true
 image: 
