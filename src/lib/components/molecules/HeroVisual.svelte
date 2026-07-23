@@ -49,10 +49,10 @@
 
 <style>
 	:root {
-		--c1: #6eccee;
-		--c2: #ffdc99;
-		--c3: #e3a4d0;
-		--c4: #d455ff;
+		--c1: var(--sphere-1, #6eccee);
+		--c2: var(--sphere-2, #ffdc99);
+		--c3: var(--sphere-3, #e3a4d0);
+		--c4: var(--sphere-4, #d455ff);
 		--radius: 18vmin;
 		--item-offset: calc(360deg / 24);
 		--circle-y: 20%;

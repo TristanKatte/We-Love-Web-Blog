@@ -4,6 +4,7 @@
 	import { title as siteTitle, navLinks } from '$lib/config';
 	import { getLatestPost } from '$lib/utils';
 	import type { Post } from '$lib/types';
+	import ThemeToggle from '$lib/components/atoms/ThemeToggle.svelte';
 
 	let navOpen = false;
 	export let featuredPost: Post | null;
@@ -22,36 +23,40 @@
 	<section class="top-bar">
 		<a href="/"><h1 class="site-title">{siteTitle}</h1></a>
 
-		<button
-			class="nav-toggle"
-			on:click={() => (navOpen = !navOpen)}
-			aria-label="Menu"
-			aria-expanded={navOpen}
-			aria-controls="main-nav"
-		>
-			☰
-		</button>
+		<div class="nav-actions">
+			<nav id="main-nav" class={`main-nav ${navOpen ? 'open' : ''}`} aria-label="Primary Navigation">
+				{#each navLinks as link}
+					<a
+						href={link.href}
+						class="nav-link"
+						target={link.external ? '_blank' : null}
+						rel={link.external ? 'noopener noreferrer' : null}
+						on:click={(event) => {
+							if (!link.external) {
+								event.preventDefault();
+								navigateTo(link.href);
+							} else {
+								navOpen = false;
+							}
+						}}
+					>
+						{link.label}
+					</a>
+				{/each}
+			</nav>
 
-		<nav id="main-nav" class={`main-nav ${navOpen ? 'open' : ''}`} aria-label="Primary Navigation">
-			{#each navLinks as link}
-				<a
-					href={link.href}
-					class="nav-link"
-					target={link.external ? '_blank' : null}
-					rel={link.external ? 'noopener noreferrer' : null}
-					on:click={(event) => {
-						if (!link.external) {
-							event.preventDefault();
-							navigateTo(link.href);
-						} else {
-							navOpen = false;
-						}
-					}}
-				>
-					{link.label}
-				</a>
-			{/each}
-		</nav>
+			<ThemeToggle />
+
+			<button
+				class="nav-toggle"
+				on:click={() => (navOpen = !navOpen)}
+				aria-label="Menu"
+				aria-expanded={navOpen}
+				aria-controls="main-nav"
+			>
+				☰
+			</button>
+		</div>
 	</section>
 	{#if featuredPost}
 		<section class="featured-post">
@@ -106,18 +111,37 @@
 		border-radius: 4px;
 	}
 
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
 	.nav-toggle {
 		display: none;
-		font-size: 2rem;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		font-size: 1.5rem;
 		color: var(--btn-color);
-		background-color: var(--cyan-12);
-		border: none;
+		background-color: var(--project-card-color);
+		border: 2px solid var(--btn-color);
+		border-radius: 6px;
 		cursor: pointer;
 		z-index: 10000;
+		transition:
+			background 0.2s ease,
+			transform 0.15s ease;
+	}
+
+	.nav-toggle:hover {
+		transform: translateY(-2px);
 	}
 
 	.main-nav {
 		display: flex;
+		align-items: center;
 		gap: 2.5rem;
 	}
 
@@ -213,7 +237,7 @@
 		}
 
 		.nav-toggle {
-			display: block;
+			display: flex;
 		}
 
 		.main-nav {
@@ -223,13 +247,14 @@
 			right: 0;
 			width: 100vw;
 			height: 75vh;
-			background: var(--gray-12);
+			background: var(--project-card-color);
 			flex-direction: column;
+			align-items: flex-start;
 			display: none;
 			padding: 4rem 1rem 2rem;
 			border-top: 2px solid var(--btn-color);
 			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-			z-index: 9998; 
+			z-index: 9998;
 		}
 
 	.main-nav.open {

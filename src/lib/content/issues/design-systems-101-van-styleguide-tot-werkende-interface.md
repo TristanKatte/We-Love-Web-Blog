@@ -3,7 +3,7 @@ title: Design Systems 101 Van Styleguide tot Werkende Interface
 description: Ontdek hoe design systems, styleguides en herbruikbare componenten helpen bij het creëren van consistente, schaalbare en efficiënte digitale producten.
 date: '2025-11-21'
 categories:
-  - We love web
+  - we love web
   - Styleguides
   - Design System
 published: true
@@ -112,7 +112,7 @@ Decathlon heeft ook een **developer portal**:
 Het design system bestaat uit drie lagen:  
 
 1. **Figma**: alles wordt hier ontworpen en geëxporteerd  
-2. **Github**: interne packages worden gebouwd en naar foundations gepushed  
+2. **GitHub**: interne packages worden gebouwd en naar foundations gepushed  
 3. **Toepassing**: foundations worden gebruikt in Android/iOS, fysieke winkels, checkout en webshop  
 
 Zo wordt het design system consistent door de hele organisatie toegepast.

@@ -28,7 +28,7 @@
 	{/if}
 
 	<hgroup>
-		<h1 style={`issue-title-${data.meta.slug}`}>
+		<h1 style={`view-transition-name: issue-title-${data.meta.slug};`}>
 			{data.meta.title}
 		</h1>
 		<p>Gepubliceerd op {formatDate(data.meta.date)}</p>

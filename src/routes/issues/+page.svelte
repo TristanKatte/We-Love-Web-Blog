@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { fade, fly } from 'svelte/transition';
+  import { flip } from 'svelte/animate';
   import { formatDate } from '$lib/utils';
   import type { Post } from '$lib/types';
   import Button from '$lib/components/atoms/Button.svelte';
@@ -15,10 +17,14 @@
   let posts: Post[] = data.allPosts ?? data.posts ?? [];
   let selected = new Set(data.selectedCategories ?? []);
 
-  // Compute all categories from all posts
+  // Compute all categories from all posts, dropping any category present on
+  // every post — a tag that never excludes a post can't act as a filter.
   let allCategories = new Set<string>();
   posts.forEach(p => p.categories?.forEach(c => allCategories.add(c)));
-  allCategories = new Set(Array.from(allCategories).sort());
+  const meaningfulCategories = Array.from(allCategories).filter(
+    cat => posts.filter(p => p.categories?.includes(cat)).length < posts.length
+  );
+  allCategories = new Set(meaningfulCategories.sort());
 
   // JavaScript enhancement flag
   let jsEnabled = false;
@@ -80,20 +86,27 @@
 <section class="category-filters" aria-label="Filter posts by category">
   <div class="filter-scroll">
     {#if jsEnabled}
-      <button on:click={clearCategories} class:selected={selected.size === 0} type="button" aria-pressed={selected.size === 0}>
+      <button
+        on:click={clearCategories}
+        class:selected={selected.size === 0}
+        type="button"
+        aria-pressed={selected.size === 0}
+        in:fly={{ y: 8, duration: 250 }}
+      >
         Alle categorieën
       </button>
     {:else}
       <a href="?" class:selected={selected.size === 0}>Alle categorieën</a>
     {/if}
 
-    {#each Array.from(allCategories) as category}
+    {#each Array.from(allCategories) as category, i (category)}
       {#if jsEnabled}
         <button
           on:click={() => toggleCategory(category)}
           class:selected={selected.has(category)}
           type="button"
           aria-pressed={selected.has(category)}
+          in:fly={{ y: 8, duration: 250, delay: 40 + i * 30 }}
         >
           {category}
         </button>
@@ -117,8 +130,14 @@
     <p>Geen resultaten gevonden voor de geselecteerde categorieën.</p>
   {:else}
     <section class="cards" aria-label="Posts">
-      {#each filteredPosts as post, i}
-        <article class="post" aria-labelledby={`post-title-${i}`}>
+      {#each filteredPosts as post, i (post.slug)}
+        <article
+          class="post"
+          aria-labelledby={`post-title-${i}`}
+          animate:flip={{ duration: 250 }}
+          in:fade={{ duration: 200, delay: i * 30 }}
+          out:fade={{ duration: 150 }}
+        >
           {#if post.image}
             <img
               class="thumb"
@@ -127,13 +146,18 @@
               width="400"
               height="200"
               loading="lazy"
+              style={`view-transition-name: issue-image-${post.slug};`}
             />
           {:else}
             <div class="thumb fallback" aria-hidden="true"></div>
           {/if}
 
           <header>
-            <h3 class="title" id={`post-title-${i}`}>{post.title}</h3>
+            <h3
+              class="title"
+              id={`post-title-${i}`}
+              style={`view-transition-name: issue-title-${post.slug};`}
+            >{post.title}</h3>
             <time class="date" datetime={post.date}>
               {formatDate(post.date, 'long', 'nl-NL')}
             </time>
@@ -193,7 +217,7 @@
     border: 1px solid var(--btn-color);
     border-radius: 9999px;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.15s ease;
     text-decoration: none;
   }
 
@@ -201,12 +225,18 @@
   .filter-scroll a:hover {
     background-color: var(--btn-color);
     color: white;
+    transform: translateY(-2px);
+  }
+
+  .filter-scroll button:active {
+    transform: scale(0.94);
   }
 
   .filter-scroll .selected,
   .filter-scroll [aria-pressed="true"] {
     background-color: var(--btn-color);
     color: white;
+    transform: scale(1.06);
   }
 
   /* Cards Layout */

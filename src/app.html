@@ -6,6 +6,16 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="https://fav.farm/🖥" />
+		<script>
+			(function () {
+				try {
+					var stored = localStorage.getItem('theme');
+					var theme =
+						stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+					document.documentElement.setAttribute('color-scheme', theme);
+				} catch (e) {}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

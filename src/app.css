@@ -17,6 +17,16 @@ html {
 	--surface-4-dark: var(--gray-9);
 	--background-dark: var(--gradient-8);
 	--border-dark: var(--gray-9);
+	--btn-color-dark: #00adb5;
+	--txt-color-dark: #dedede;
+	--heading-color-dark: #a2f3f3;
+	--project-card-color-dark: #111827;
+	--strong-color-dark: #f2e9e4;
+	--sphere-1-dark: #6eccee;
+	--sphere-2-dark: #ffdc99;
+	--sphere-3-dark: #e3a4d0;
+	--sphere-4-dark: #d455ff;
+	--page-background-dark: var(--gradient-16);
 
 	/* light */
 	--brand-light: var(--orange-10);
@@ -28,6 +38,16 @@ html {
 	--surface-4-light: var(--gray-3);
 	--background-light: none;
 	--border-light: var(--gray-4);
+	--btn-color-light: #007e86;
+	--txt-color-light: #2b2f36;
+	--heading-color-light: #00636b;
+	--project-card-color-light: #f3f6f7;
+	--strong-color-light: #14181d;
+	--sphere-1-light: #1c93b0;
+	--sphere-2-light: #d98f2b;
+	--sphere-3-light: #b5568f;
+	--sphere-4-light: #8a2bb5;
+	--page-background-light: #f5f5f0;
 }
 
 :root {
@@ -42,6 +62,16 @@ html {
 	--surface-4: var(--surface-4-dark);
 	--background: var(--background-dark);
 	--border: var(--border-dark);
+	--btn-color: var(--btn-color-dark);
+	--txt-color: var(--txt-color-dark);
+	--heading-color: var(--heading-color-dark);
+	--project-card-color: var(--project-card-color-dark);
+	--strong-color: var(--strong-color-dark);
+	--sphere-1: var(--sphere-1-dark);
+	--sphere-2: var(--sphere-2-dark);
+	--sphere-3: var(--sphere-3-dark);
+	--sphere-4: var(--sphere-4-dark);
+	--page-background: var(--page-background-dark);
 }
 
 @media (prefers-color-scheme: light) {
@@ -57,6 +87,16 @@ html {
 		--surface-4: var(--surface-4-light);
 		--background: var(--background-light);
 		--border: var(--border-light);
+		--btn-color: var(--btn-color-light);
+		--txt-color: var(--txt-color-light);
+		--heading-color: var(--heading-color-light);
+		--project-card-color: var(--project-card-color-light);
+		--strong-color: var(--strong-color-light);
+		--sphere-1: var(--sphere-1-light);
+		--sphere-2: var(--sphere-2-light);
+		--sphere-3: var(--sphere-3-light);
+		--sphere-4: var(--sphere-4-light);
+		--page-background: var(--page-background-light);
 	}
 }
 
@@ -72,6 +112,16 @@ html {
 	--surface-4: var(--surface-4-dark);
 	--background: var(--background-dark);
 	--border: var(--border-dark);
+	--btn-color: var(--btn-color-dark);
+	--txt-color: var(--txt-color-dark);
+	--heading-color: var(--heading-color-dark);
+	--project-card-color: var(--project-card-color-dark);
+	--strong-color: var(--strong-color-dark);
+	--sphere-1: var(--sphere-1-dark);
+	--sphere-2: var(--sphere-2-dark);
+	--sphere-3: var(--sphere-3-dark);
+	--sphere-4: var(--sphere-4-dark);
+	--page-background: var(--page-background-dark);
 }
 
 [color-scheme='light'] {
@@ -86,6 +136,16 @@ html {
 	--surface-4: var(--surface-4-light);
 	--background: var(--background-light);
 	--border: var(--border-light);
+	--btn-color: var(--btn-color-light);
+	--txt-color: var(--txt-color-light);
+	--heading-color: var(--heading-color-light);
+	--project-card-color: var(--project-card-color-light);
+	--strong-color: var(--strong-color-light);
+	--sphere-1: var(--sphere-1-light);
+	--sphere-2: var(--sphere-2-light);
+	--sphere-3: var(--sphere-3-light);
+	--sphere-4: var(--sphere-4-light);
+	--page-background: var(--page-background-light);
 }
 
 html,

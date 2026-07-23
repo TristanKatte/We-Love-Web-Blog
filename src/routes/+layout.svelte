@@ -35,18 +35,14 @@
 </div>
 
 <style>
-	:global(:root) {
-		--main-bg-color: #393c44;
-		--btn-color: #00adb5;
-		--txt-color: #dedede;
-		--heading-color: #a2f3f3;
-		--project-card-color: #111827;
-		--strong-color: #f2e9e4;
-	}
-
 	::view-transition-old(root),
 	::view-transition-new(root) {
 		animation: fade 300ms ease both;
+	}
+
+	::view-transition-group(*) {
+		animation-duration: 350ms;
+		animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	@keyframes fade {
@@ -75,7 +71,7 @@
 		margin-inline: auto;
 		box-sizing: border-box;
 		scroll-behavior: smooth;
-		background: var(--gradient-16);
+		background: var(--page-background);
 		z-index: 1;
 
 		@media (max-width: 768px) {
