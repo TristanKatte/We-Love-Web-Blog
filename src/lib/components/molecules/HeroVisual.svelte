@@ -53,12 +53,14 @@
 		--c2: var(--sphere-2, #ffdc99);
 		--c3: var(--sphere-3, #e3a4d0);
 		--c4: var(--sphere-4, #d455ff);
+		--base: var(--sphere-base, black);
+		--glow-color: var(--sphere-glow, oklch(1 0 0 / 19%));
 		--radius: 18vmin;
 		--item-offset: calc(360deg / 24);
 		--circle-y: 20%;
 		--border: 0.6vmin;
 		--animation-duration: 4s;
-		--glow: drop-shadow(0 0 6vmin oklch(1 0 0 / 19%));
+		--glow: drop-shadow(0 0 6vmin var(--glow-color));
 	}
 
 	@property --angle {
@@ -129,7 +131,7 @@
 
 		background:
 			radial-gradient(circle at 50% var(--circle-y), var(--c4) calc(var(--diameter) + var(--border)), var(--c4) calc(var(--diameter) + var(--border)), transparent var(--diameter)),
-			linear-gradient(black, black),
+			linear-gradient(var(--base), var(--base)),
 			linear-gradient(45deg, var(--c1), var(--c3), var(--c2), var(--c1), var(--c4), var(--c3), var(--c2));
 		background-repeat: no-repeat;
 		background-size: 100% 100%, calc(100% - var(--border) * 2) calc(100% - var(--border) * 2), 100%;
@@ -150,7 +152,7 @@
 		inset: 0px;
 
 		background:
-			linear-gradient(black, black) no-repeat,
+			linear-gradient(var(--base), var(--base)) no-repeat,
 			linear-gradient(to right, var(--c1), var(--c3), var(--c2), var(--c1)) no-repeat;
 		background-size: calc(100% - var(--border) * 2) calc(100% - var(--border) * 2), 100%;
 		background-position: var(--border) var(--border), 0 0;
@@ -166,7 +168,7 @@
 		inset: 0px;
 
 		background:
-			linear-gradient(black, black) no-repeat,
+			linear-gradient(var(--base), var(--base)) no-repeat,
 			linear-gradient(to top, var(--c1), var(--c3), var(--c2), var(--c1)) no-repeat;
 		background-size: calc(100% - var(--border) * 2) calc(100% - var(--border) * 2), 100%;
 		background-position: var(--border) var(--border), 0 0;
@@ -195,7 +197,7 @@
 		filter: var(--glow);
 
 		background:
-			radial-gradient(var(--radius) var(--radius) at center, black calc(var(--radius) - var(--border)), transparent calc(var(--radius) - var(--border))),
+			radial-gradient(var(--radius) var(--radius) at center, var(--base) calc(var(--radius) - var(--border)), transparent calc(var(--radius) - var(--border))),
 			conic-gradient(var(--c1), var(--c3), var(--c2), var(--c4), var(--c3), var(--c1), var(--c2), var(--c1));
 		background-repeat: no-repeat;
 		background-position: 50%;

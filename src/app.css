@@ -26,6 +26,8 @@ html {
 	--sphere-2-dark: #ffdc99;
 	--sphere-3-dark: #e3a4d0;
 	--sphere-4-dark: #d455ff;
+	--sphere-base-dark: #000000;
+	--sphere-glow-dark: oklch(1 0 0 / 19%);
 	--page-background-dark: var(--gradient-16);
 
 	/* light */
@@ -47,6 +49,8 @@ html {
 	--sphere-2-light: #d98f2b;
 	--sphere-3-light: #b5568f;
 	--sphere-4-light: #8a2bb5;
+	--sphere-base-light: #ffffff;
+	--sphere-glow-light: oklch(0 0 0 / 12%);
 	--page-background-light: #f5f5f0;
 }
 
@@ -71,6 +75,8 @@ html {
 	--sphere-2: var(--sphere-2-dark);
 	--sphere-3: var(--sphere-3-dark);
 	--sphere-4: var(--sphere-4-dark);
+	--sphere-base: var(--sphere-base-dark);
+	--sphere-glow: var(--sphere-glow-dark);
 	--page-background: var(--page-background-dark);
 }
 
@@ -96,6 +102,8 @@ html {
 		--sphere-2: var(--sphere-2-light);
 		--sphere-3: var(--sphere-3-light);
 		--sphere-4: var(--sphere-4-light);
+		--sphere-base: var(--sphere-base-light);
+		--sphere-glow: var(--sphere-glow-light);
 		--page-background: var(--page-background-light);
 	}
 }
@@ -121,6 +129,8 @@ html {
 	--sphere-2: var(--sphere-2-dark);
 	--sphere-3: var(--sphere-3-dark);
 	--sphere-4: var(--sphere-4-dark);
+	--sphere-base: var(--sphere-base-dark);
+	--sphere-glow: var(--sphere-glow-dark);
 	--page-background: var(--page-background-dark);
 }
 
@@ -145,6 +155,8 @@ html {
 	--sphere-2: var(--sphere-2-light);
 	--sphere-3: var(--sphere-3-light);
 	--sphere-4: var(--sphere-4-light);
+	--sphere-base: var(--sphere-base-light);
+	--sphere-glow: var(--sphere-glow-light);
 	--page-background: var(--page-background-light);
 }
 
